@@ -1,15 +1,23 @@
 package main
 
 import (
+	"crud/config"
 	"github.com/labstack/echo/v4"
+	"crud/routes"
 )
 
 func main() {
 
+	
 	app := echo.New()
-	app.GET("/", func(c echo.Context) error {
-		return c.JSON(200, &echo.Map{"data": "Hello from Echo & mongoDB"})
-	})
+	
+	// connect to database
+	config.ConnectDB()
 
+	// add routes
+	routes.UserRoutes(app)
+
+
+	// lunch app
 	app.Logger.Fatal(app.Start(":8080"))
 }
